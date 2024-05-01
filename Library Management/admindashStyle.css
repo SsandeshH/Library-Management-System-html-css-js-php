@@ -1,18 +1,16 @@
-/* CSS for Admin Dashboard */
 
-/* Reset default margin and padding */
 body, h1, h2, h3, p, ul, li {
     margin: 0;
     padding: 0;
 }
 
-/* Set background color and font */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
 }
 
-/* Header styling */
+
 header {
     background-color: #333;
     color: #fff;
@@ -63,7 +61,7 @@ nav ul li a {
     margin-bottom: 20px;
 }
 
-/* Form styling */
+
 .form-group {
     margin-bottom: 20px;
 }

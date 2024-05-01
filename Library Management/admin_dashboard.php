@@ -18,7 +18,7 @@
             <nav>
                 <ul>
                     <!-- <li><a href="index.html">Home</a></li> -->
-                    <li><a href="logout.php">Logout</a></li> <!-- Assuming a logout.php file for logging out -->
+                    <li><a href="logout.php">Logout</a></li> 
                 </ul>
             </nav>
         </div>
@@ -27,7 +27,7 @@
     <div class="container">
         <h1>Welcome, Admin!</h1>
         
-        <!-- Add New Book Form -->
+        
         <h2>Add New Book</h2>
         <form action="add_book.php" method="post">
             <div class="form-group">
@@ -54,7 +54,7 @@
             <button type="submit" class="btn">Add Book</button>
         </form>
 
-        <!-- Manage Books Table -->
+        
         <div class="container">
             <h2>Manage Books</h2>
             <table>

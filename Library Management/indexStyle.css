@@ -52,7 +52,7 @@ body {
     background-size: cover;
     background-position: center;
     position: relative;
-    height: 682px; /* Adjust height as needed */
+    height: 682px; 
   }
   
   .overlay {
@@ -65,7 +65,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity as needed */
+    background-color: rgba(0, 0, 0, 0.6); 
   }
   
   h1, p {
