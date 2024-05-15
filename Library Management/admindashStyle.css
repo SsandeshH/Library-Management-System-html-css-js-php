@@ -124,3 +124,20 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+/* pending table style */
+.pending-requests-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pending-requests-table th,
+.pending-requests-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.pending-requests-table th {
+    background-color: #4CAF50;;
+}

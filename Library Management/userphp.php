@@ -1,5 +1,6 @@
 <?php
-//checks username ra password, not email ra password
+session_start(); // Start the session
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve user input
@@ -10,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $username_db = "root"; // Your MySQL username
     $password_db = ""; // Your MySQL password
-    $dbname = "lmsDb";
+    $dbname = "lmsdb";
 
     // Create connection
     $conn = new mysqli($servername, $username_db, $password_db, $dbname);
@@ -26,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($result->num_rows > 0) {
         // User exists, set session and redirect to user dashboard
-        $_SESSION['user_username'] = $username;
-        header("Location:userPage.html");
+        $_SESSION['username'] = $username; // Save username in session
+        header("Location: userPage.html"); // Redirect to userPage.php
         exit();
     } else {
         // User does not exist, redirect back to user login page with error flag in URL

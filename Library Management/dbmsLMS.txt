@@ -6,8 +6,6 @@ CREATE TABLE users (
 );
 
 
-
-lmsdbbooks -
 		
 CREATE TABLE books (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,9 +16,20 @@ CREATE TABLE books (
     available BOOLEAN DEFAULT true
 );
 
-lmsadmin
 CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE book_requests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    author VARCHAR(255),
+    genre VARCHAR(100),
+    description TEXT,
+    status ENUM('denied', 'accepted', 'pending') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    userName VARCHAR(100)
+);
+

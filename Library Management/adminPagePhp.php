@@ -6,7 +6,7 @@ session_start();
 $servername = "localhost";
 $username = "root"; 
 $password = ""; 
-$dbname = "lmsadmin";
+$dbname = "lmsdb";
 
 
 $conn = new mysqli($servername, $username, $password, $dbname);

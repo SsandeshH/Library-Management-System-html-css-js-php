@@ -4,46 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .result-box {
-            background-color: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        h2 {
-            margin-top: 0;
-        }
-        p {
-            margin-bottom: 10px;
-        }
-        strong {
-            font-weight: bold;
-        }
-        .no-results {
-            color: #666;
-        }
-    </style>
+
 </head>
 <body>
     <div class="container">
+
         <h2>Search Results</h2>
         <?php
+
+        
         // Database connection
         $servername = "localhost";
         $username = "root"; // Your MySQL username
         $password = ""; // Your MySQL password
-        $dbname = "lmsDbbooks";
+        $dbname = "lmsdb";
+
+
 
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
@@ -69,6 +45,8 @@
                     echo "<strong>Author:</strong> " . $row['author'] . "<br>";
                     echo "<strong>Genre:</strong> " . $row['genre'] . "<br>";
                     echo "<strong>Description:</strong> " . $row['description'] . "</p>";
+                    // Add request button
+                    echo "<button class='request-button' onclick='requestBook(\"" . $row['title'] . "\", \"" . $row['author'] . "\", \"" . $row['genre'] . "\", \"" . $row['description'] . "\")'>Request</button>";
                     echo "</div>";
                 }
             } else {
@@ -78,6 +56,22 @@
 
         $conn->close();
         ?>
+
+        <script>
+            function requestBook(title, author, genre, description) {
+                // AJAX request to insert book details into book_requests table
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "insert_request.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // Display response message
+                        alert(xhr.responseText);
+                    }
+                };
+                xhr.send("title=" + title + "&author=" + author + "&genre=" + genre + "&description=" + description);
+            }
+        </script>
     </div>
 </body>
 </html>

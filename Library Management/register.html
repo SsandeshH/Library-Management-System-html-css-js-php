@@ -42,10 +42,18 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
           </div>
+          <p id="error_message" style="color: red; display: none;">Email or UserName already exists</p>
           <button type="submit" class="btn">Register</button>
         </form>
       </div>
     </div>
   </div>
 </body>
+<script>
+  // DOM manipulation script to show error message if register is already exists
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('error') === '1') {
+      document.getElementById("error_message").style.display = "block";
+  }
+</script>
 </html>

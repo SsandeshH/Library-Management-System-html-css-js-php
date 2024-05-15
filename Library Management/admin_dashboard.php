@@ -26,8 +26,57 @@
 
     <div class="container">
         <h1>Welcome, Admin!</h1>
-        
-        
+
+        <h2>Process Pending Requests</h2>
+                    <?php
+            // Database connection
+            $servername = "localhost";
+            $username = "root"; // Your MySQL username
+            $password = ""; // Your MySQL password
+            $dbname = "lmsdb";
+
+            // Create connection
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+
+            // Retrieve pending book requests
+            $sql = "SELECT * FROM book_requests WHERE status = 'pending'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                // Display pending book requests in a table
+                echo "<table class='pending-requests-table'>";
+                echo "<tr><th>Title</th><th>Author</th><th>Genre</th><th>Description</th><th>Requested By</th><th>Requested At</th><th>Action</th></tr>";
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row['title'] . "</td>";
+                    echo "<td>" . $row['author'] . "</td>";
+                    echo "<td>" . $row['genre'] . "</td>";
+                    echo "<td>" . $row['description'] . "</td>";
+                    echo "<td>" . $row['userName'] . "</td>";
+                    echo "<td>" . $row['created_at'] . "</td>";
+                    if ($row['status'] == 'pending') {
+                        echo "<td><button class='accept-btn' onclick='acceptRequest(" . $row['id'] . ")'>Accept</button><button class='deny-btn' onclick='denyRequest(" . $row['id'] . ")'>Deny</button></td>";
+                    } else {
+                        echo "<td>Fulfilled</td>";
+                    }
+                    echo "</tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "<p class='no-requests'>No pending requests found.</p>";
+            }
+
+            $conn->close();
+            ?>
+
+    </div>
+
+    <div class="container">    
         <h2>Add New Book</h2>
         <form action="add_book.php" method="post">
             <div class="form-group">
@@ -47,26 +96,25 @@
                 <input type="text" id="description" name="description" required>
             </div>
             <div class="form-group">
-            <label for="available">Available:</label>
-            <input type="checkbox" id="available" name="available" value="1">
-            
+                <label for="available">Available:</label>
+                <input type="checkbox" id="available" name="available" value="1">
             </div>
             <button type="submit" class="btn">Add Book</button>
         </form>
+    </div>
 
-        
         <div class="container">
             <h2>Manage Books</h2>
             <table>
-
                 <tbody>
-                    
-                    <?php require 'display_books.php'; ?>
-
+                    <?php 
+                        // Display existing books
+                        require 'display_books.php'; 
+                    ?>
                 </tbody>
             </table>
         </div>
-    </div>
+
 
     <script>
         function deleteBook(id) {
@@ -96,6 +144,54 @@
                 });
             });
         });
+
+        
+    function acceptRequest(id) {
+        updateRequestStatus(id, 'accepted');
+    }
+
+    function denyRequest(id) {
+        updateRequestStatus(id, 'denied');
+    }
+
+    function updateRequestStatus(id, status) {
+        // Send AJAX request to update request status
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update_req.php');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Reload the page after updating request status
+                location.reload();
+            } else {
+                console.error('Error updating request status');
+            }
+        };
+        xhr.send('id=' + id + '&status=' + status);
+    }
+
+    // Add event listeners to accept and deny buttons
+    const acceptButtons = document.querySelectorAll('.accept-btn');
+    acceptButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const requestId = this.dataset.id;
+            acceptRequest(requestId);
+        });
+    });
+
+    const denyButtons = document.querySelectorAll('.deny-btn');
+    denyButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const requestId = this.dataset.id;
+            denyRequest(requestId);
+        });
+    });
+
+
+
+
     </script>
+  
+
 </body>
 </html>
